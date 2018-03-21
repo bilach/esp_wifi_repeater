@@ -12,7 +12,7 @@
 # - 2014-11-23: Updated for SDK 0.9.3
 # - 2014-12-25: Replaced esptool by esptool.py
 
-BUILD_AREA = /home/martin/github
+BUILD_AREA = /home/bn/workspace/esp8266
 
 # Output directors to store intermediate compiled files
 # relative to the project directory
@@ -26,10 +26,10 @@ XTENSA_TOOLS_ROOT ?= $(BUILD_AREA)/esp-open-sdk/xtensa-lx106-elf/bin
 SDK_BASE	?= $(BUILD_AREA)/esp-open-sdk/sdk
 
 # # esptool.py path and port
-ESPTOOL		?= $(BUILD_AREA)/esp-open-sdk/esptool/esptool.py
-#ESPTOOL		?= /home/martin/.local/bin/esptool.py
+#ESPTOOL		?= $(BUILD_AREA)/esp-open-sdk/esptool/esptool.py
+ESPTOOL		?= ~/.local/bin/esptool.py
 ESPPORT		?= /dev/ttyUSB0
-ESPTOOLBAUD	?= 115200
+ESPTOOLBAUD	?= 460800
 ESPTOOLOPTS	= -ff 40m -fm dio -fs 32m
 
 # name for the target project
@@ -40,7 +40,7 @@ MODULES		= driver user mqtt easygpio
 EXTRA_INCDIR    = include $(BUILD_AREA)/esp-open-sdk/esp-open-lwip/include
 #EXTRA_INCDIR    = include
 
-#LIB_MODULES	= mqtt
+LIB_MODULES	= mqtt
 
 # libraries used in this project, mainly provided by the SDK
 LIBS		= c gcc hal pp phy net80211 lwip_open_napt wpa main 
@@ -137,7 +137,7 @@ $(FW_BASE):
 	$(Q) mkdir -p $@
 
 flash: $(FW_FILE_1) $(FW_FILE_2)
-	sudo $(ESPTOOL) --port $(ESPPORT) --baud $(ESPTOOLBAUD) write_flash $(ESPTOOLOPTS) $(FW_FILE_1_ADDR) $(FW_FILE_1) $(FW_FILE_2_ADDR) $(FW_FILE_2)
+	$(ESPTOOL) --port $(ESPPORT) --baud $(ESPTOOLBAUD) write_flash $(ESPTOOLOPTS) $(FW_FILE_1_ADDR) $(FW_FILE_1) $(FW_FILE_2_ADDR) $(FW_FILE_2)
 
 clean:
 	$(Q) rm -rf $(FW_BASE) $(BUILD_BASE)
