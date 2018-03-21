@@ -1,0 +1,7 @@
+mosquitto_sub -h localhost -t /WiFi/# -v
+
+# To fix a broken boot
+# Check boot with
+miniterm.py - 76800
+# Flash uPython
+esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect -fm dio 0 esp8266-20171101-v1.9.3.bin
